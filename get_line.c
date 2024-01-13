@@ -11,7 +11,6 @@ char *get_line(void)
 	size_t len = 0;
 	ssize_t n;
 
-	write(1, "$ ", 2);
 	n = getline(&line, &len, stdin);
 	if (n == -1)
 	{
@@ -25,4 +24,3 @@ char *get_line(void)
 	}
 	return (line);
 }
-

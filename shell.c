@@ -6,27 +6,29 @@
  * Return: 0
  */
 
-int main(void)
+int main()
 {
 	char *input;
 	char **tokens;
 
 	while (1)
 	{
-		if (isatty(STDIN_FILENO))
+		prompt();
+		input = get_line();
+		tokens = (char **)malloc(sizeof(char *) * MAX_TOKENS);
+		if (input == NULL)
 		{
-			input = get_line();
-			if (input == NULL)
-			{
-				perror("can't read from stdin");
-				exit(EXIT_FAILURE);
-			}
-			tokens = tokenization(input);
-			execute_command(tokens);
-			free_tokens(tokens);
-			free(input);
+			perror("can't read from stdin");
+			exit(EXIT_FAILURE);
 		}
-
+		if (tokens == NULL)
+		{
+			perror("malloc failed");
+			exit(EXIT_FAILURE);
+		}
+		tokenization(input, tokens);
+		execute_command(tokens, NULL);
+		
 	}
 	return (0);
 }
